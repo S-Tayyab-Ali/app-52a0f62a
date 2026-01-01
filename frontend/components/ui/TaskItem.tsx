@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Check, Trash2, Edit2, X } from 'lucide-react';
+import { Trash2, Edit2 } from 'lucide-react';
 import { Task } from '../../types/task';
 
 interface TaskItemProps {
@@ -27,7 +27,6 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete, on
       onEdit(task.id, editText.trim());
       setIsEditing(false);
     } else {
-      // If empty, revert or delete? Let's revert.
       setEditText(task.text);
       setIsEditing(false);
     }
@@ -44,44 +43,47 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete, on
 
   return (
     <div 
-      className={`group relative flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${
+      className={`group relative flex items-center gap-3 p-3 rounded border-2 transition-all duration-200 ${
         task.completed 
-          ? 'bg-zinc-900/40 border-zinc-800/50' 
-          : 'bg-zinc-900 border-zinc-800 hover:border-zinc-700 hover:shadow-lg hover:shadow-white/5'
+          ? 'bg-[#8bac8b]/50 border-[#5a7a5a]/30 opacity-70' 
+          : 'bg-[#e0f0e0] border-[#5a7a5a] shadow-sm hover:translate-x-1'
       }`}
     >
-      {/* Checkbox */}
+      {/* Pokeball Checkbox */}
       <button
         onClick={() => onToggle(task.id)}
-        className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
-          task.completed
-            ? 'bg-zinc-500 border-zinc-500 scale-110'
-            : 'border-zinc-600 hover:border-white'
-        }`}
+        className="flex-shrink-0 w-8 h-8 relative group/btn"
+        title={task.completed ? "Mark as active" : "Mark as captured"}
       >
-        {task.completed && <Check size={14} className="text-black" />}
+        <div className={`w-full h-full rounded-full border-2 border-black overflow-hidden transition-all duration-300 ${
+          task.completed ? 'grayscale opacity-50' : 'rotate-0 group-hover/btn:rotate-12'
+        }`}>
+          <div className="absolute top-0 left-0 w-full h-1/2 bg-red-500 border-b-2 border-black" />
+          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-white" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full border-2 border-black z-10">
+            {task.completed && <div className="absolute inset-0 bg-red-500 rounded-full scale-50" />}
+          </div>
+        </div>
       </button>
 
       {/* Content */}
-      <div className="flex-1 min-w-0">
+      <div className="flex-1 min-w-0 font-mono">
         {isEditing ? (
-          <div className="flex items-center gap-2">
-            <input
-              ref={inputRef}
-              type="text"
-              value={editText}
-              onChange={(e) => setEditText(e.target.value)}
-              onKeyDown={handleKeyDown}
-              onBlur={handleSave}
-              className="w-full bg-black text-white px-2 py-1 rounded border border-zinc-700 outline-none focus:ring-1 focus:ring-white"
-            />
-          </div>
+          <input
+            ref={inputRef}
+            type="text"
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+            onKeyDown={handleKeyDown}
+            onBlur={handleSave}
+            className="w-full bg-[#8bac8b] text-[#2d4d2d] px-2 py-1 rounded border border-[#5a7a5a] outline-none font-bold"
+          />
         ) : (
           <span 
-            className={`block truncate text-lg transition-all duration-300 ${
+            className={`block truncate text-lg font-bold tracking-tight transition-all duration-300 ${
               task.completed 
-                ? 'text-zinc-600 line-through decoration-zinc-700' 
-                : 'text-zinc-100'
+                ? 'text-[#5a7a5a] line-through' 
+                : 'text-[#2d4d2d]'
             }`}
             onDoubleClick={() => setIsEditing(true)}
           >
@@ -91,24 +93,25 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete, on
       </div>
 
       {/* Actions */}
-      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+      <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
         {!isEditing && !task.completed && (
           <button
             onClick={() => setIsEditing(true)}
-            className="p-2 text-zinc-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
+            className="p-1.5 text-[#2d4d2d] hover:bg-[#8bac8b] rounded transition-colors"
             title="Edit"
           >
-            <Edit2 size={18} />
+            <Edit2 size={16} />
           </button>
         )}
         <button
           onClick={() => onDelete(task.id)}
-          className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors"
-          title="Delete"
+          className="p-1.5 text-[#2d4d2d] hover:text-red-600 hover:bg-red-100 rounded transition-colors"
+          title="Release"
         >
-          <Trash2 size={18} />
+          <Trash2 size={16} />
         </button>
       </div>
     </div>
   );
 };
+

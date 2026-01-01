@@ -20,33 +20,28 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   counts,
   onClearCompleted 
 }) => {
-  const filters: { id: FilterType; label: string }[] = [
-    { id: 'all', label: 'All' },
-    { id: 'active', label: 'Active' },
-    { id: 'completed', label: 'Completed' },
+  const filters: { id: FilterType; label: string; color: string }[] = [
+    { id: 'all', label: 'ALL', color: 'bg-blue-500' },
+    { id: 'active', label: 'WILD', color: 'bg-green-500' },
+    { id: 'completed', label: 'CAUGHT', color: 'bg-red-500' },
   ];
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-500">
-      <div className="flex p-1 bg-zinc-900 border border-zinc-800 rounded-xl">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 font-mono">
+      <div className="flex gap-2">
         {filters.map((filter) => (
           <button
             key={filter.id}
             onClick={() => onFilterChange(filter.id)}
-            className={`relative px-4 py-2 rounded-lg transition-all duration-300 ${
+            className={`relative px-3 py-1 rounded shadow-md border-b-4 active:border-b-0 active:translate-y-1 transition-all duration-100 text-xs font-bold text-white uppercase tracking-wider ${
               currentFilter === filter.id
-                ? 'text-black font-medium'
-                : 'hover:text-zinc-300'
+                ? `${filter.color} border-black/30 brightness-110`
+                : 'bg-zinc-500 border-zinc-700 hover:bg-zinc-400'
             }`}
           >
-            {currentFilter === filter.id && (
-              <div className="absolute inset-0 bg-white rounded-lg shadow-sm" />
-            )}
-            <span className="relative z-10 flex items-center gap-2">
+            <span className="flex items-center gap-2">
               {filter.label}
-              <span className={`text-xs px-1.5 py-0.5 rounded-full ${
-                currentFilter === filter.id ? 'bg-black/10 text-black' : 'bg-zinc-800 text-zinc-400'
-              }`}>
+              <span className="bg-black/20 px-1.5 rounded text-[10px]">
                 {filter.id === 'all' ? counts.all : filter.id === 'active' ? counts.active : counts.completed}
               </span>
             </span>
@@ -57,11 +52,12 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       {counts.completed > 0 && (
         <button
           onClick={onClearCompleted}
-          className="text-zinc-500 hover:text-red-400 transition-colors text-sm font-medium px-4 py-2 hover:bg-red-400/10 rounded-lg"
+          className="text-xs font-bold text-[#2d4d2d] hover:text-red-600 underline decoration-2 underline-offset-2 uppercase tracking-wide"
         >
-          Clear Completed
+          Release Caught
         </button>
       )}
     </div>
   );
 };
+

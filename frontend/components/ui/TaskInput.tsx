@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Plus } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 interface TaskInputProps {
   onAdd: (text: string) => void;
@@ -19,25 +19,24 @@ export const TaskInput: React.FC<TaskInputProps> = ({ onAdd }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="w-full relative group">
-      <div className="absolute -inset-0.5 bg-cyan-500/20 rounded-lg opacity-50 group-hover:opacity-100 transition duration-500 blur-sm"></div>
-      <div className="relative flex items-center bg-black border border-cyan-500/50 rounded-lg p-1 shadow-[0_0_15px_rgba(6,182,212,0.15)]">
-        <div className="pl-4 pr-2 text-cyan-500/50 font-mono text-xs select-none">
-          CMD:
+    <form onSubmit={handleSubmit} className="w-full">
+      <div className="relative flex items-center bg-[#8bac8b] border-2 border-[#5a7a5a] rounded-lg shadow-[inset_0_2px_4px_rgba(0,0,0,0.1)]">
+        <div className="pl-3 text-[#2d4d2d]">
+          <Search size={20} strokeWidth={3} />
         </div>
         <input
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Enter mission objective..."
-          className="flex-1 bg-transparent border-none outline-none text-cyan-400 placeholder-cyan-900/50 px-2 py-3 text-lg font-mono tracking-wide"
+          placeholder="Register new task..."
+          className="flex-1 bg-transparent border-none outline-none text-[#2d4d2d] placeholder-[#2d4d2d]/50 px-3 py-3 text-lg font-mono font-bold tracking-tight"
         />
         <button
           type="submit"
           disabled={!text.trim()}
-          className="p-3 rounded bg-cyan-900/30 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500 hover:text-black hover:shadow-[0_0_10px_rgba(6,182,212,0.5)] transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-cyan-400"
+          className="mr-2 px-4 py-1.5 bg-yellow-400 border-2 border-yellow-600 rounded text-yellow-900 font-bold text-sm uppercase tracking-wider hover:bg-yellow-300 active:translate-y-0.5 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:active:translate-y-0"
         >
-          <Plus size={20} />
+          Add
         </button>
       </div>
     </form>
