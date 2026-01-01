@@ -46,8 +46,8 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete, on
     <div 
       className={`group relative flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 ${
         task.completed 
-          ? 'bg-slate-900/40 border-white/5' 
-          : 'bg-white/5 border-white/10 hover:bg-white/10 hover:border-white/20 hover:shadow-lg hover:shadow-purple-500/5'
+          ? 'bg-zinc-900/40 border-zinc-800/50' 
+          : 'bg-zinc-900 border-zinc-800 hover:border-zinc-700 hover:shadow-lg hover:shadow-white/5'
       }`}
     >
       {/* Checkbox */}
@@ -55,11 +55,11 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete, on
         onClick={() => onToggle(task.id)}
         className={`flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all duration-300 ${
           task.completed
-            ? 'bg-emerald-500 border-emerald-500 scale-110'
-            : 'border-slate-400 hover:border-purple-400'
+            ? 'bg-zinc-500 border-zinc-500 scale-110'
+            : 'border-zinc-600 hover:border-white'
         }`}
       >
-        {task.completed && <Check size={14} className="text-white" />}
+        {task.completed && <Check size={14} className="text-black" />}
       </button>
 
       {/* Content */}
@@ -73,15 +73,15 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete, on
               onChange={(e) => setEditText(e.target.value)}
               onKeyDown={handleKeyDown}
               onBlur={handleSave}
-              className="w-full bg-slate-800/50 text-white px-2 py-1 rounded border border-purple-500/50 outline-none focus:ring-2 focus:ring-purple-500/50"
+              className="w-full bg-black text-white px-2 py-1 rounded border border-zinc-700 outline-none focus:ring-1 focus:ring-white"
             />
           </div>
         ) : (
           <span 
             className={`block truncate text-lg transition-all duration-300 ${
               task.completed 
-                ? 'text-slate-500 line-through decoration-slate-600' 
-                : 'text-slate-100'
+                ? 'text-zinc-600 line-through decoration-zinc-700' 
+                : 'text-zinc-100'
             }`}
             onDoubleClick={() => setIsEditing(true)}
           >
@@ -95,7 +95,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete, on
         {!isEditing && !task.completed && (
           <button
             onClick={() => setIsEditing(true)}
-            className="p-2 text-slate-400 hover:text-blue-400 hover:bg-blue-400/10 rounded-lg transition-colors"
+            className="p-2 text-zinc-500 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
             title="Edit"
           >
             <Edit2 size={18} />
@@ -103,7 +103,7 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete, on
         )}
         <button
           onClick={() => onDelete(task.id)}
-          className="p-2 text-slate-400 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors"
+          className="p-2 text-zinc-500 hover:text-red-400 hover:bg-red-400/10 rounded-lg transition-colors"
           title="Delete"
         >
           <Trash2 size={18} />
@@ -112,4 +112,3 @@ export const TaskItem: React.FC<TaskItemProps> = ({ task, onToggle, onDelete, on
     </div>
   );
 };
-
